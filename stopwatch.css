@@ -1,0 +1,24 @@
+h1, div {
+	text-align: center;
+}
+
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+td, th {
+	padding: 8px;
+	text-align: center;
+}
+
+button {
+	border-radius: 12px;
+	font-size: 24px;
+}
+
+#startstop {
+	background-color: #4CAF50;
+}

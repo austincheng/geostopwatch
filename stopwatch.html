@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>GeoWatch</title>
+		<script src="stopwatch.js"></script>
+		<link rel="stylesheet" type="text/css" href="stopwatch.css">
+		<link rel="icon" type="image/png" href="logo.png"/>
+	</head>
+	<body onload="initializeTable()">
+		<h1 id="h1" style="font-size:60px">00:00:00.000</h1>
+
+		<div>
+			<button type="button" id="startstop" onclick="startTimer()">Start</button>
+			<button type="button" id="resetButton" onclick="reset()">Reset</button>
+		</div>
+
+		<table id="table"">
+			<thead>
+				<th width="22%">Start Time </th>
+				<th width="22%">Start Location</th>
+				<th width="22%">Stop Time</th>
+				<th width="22%">Stop Location</th>
+				<th width="8%">Time Elapsed</th>
+			</thead>
+			<tbody id="tbody">
+			</tbody>
+		</table>
+	</body>
+</html>

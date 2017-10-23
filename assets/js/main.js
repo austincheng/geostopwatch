@@ -160,15 +160,15 @@ function insertTimeEntry(date, spot) {
 	var table = document.getElementById("tbody");
 	var timeEntry = table.rows[table.rows.length - 1].cells[spot];
 	
-	var timeTextNode = document.createTextNode(entryTime(date));
+	var timeTextNode = document.createTextNode(date.toString());
 
 	timeEntry.appendChild(timeTextNode);
 
 	if (spot == 0) {
-		localStorage.setItem("startTime" + entryNumberTime, entryTime(date));
+		localStorage.setItem("startTime" + entryNumberTime, date.toString());
 		localStorage.setItem("startTime", date.toUTCString());
 	} else {
-		localStorage.setItem("stopTime" + entryNumberTime, entryTime(date));
+		localStorage.setItem("stopTime" + entryNumberTime, date.toString());
 	}
 }
 
@@ -192,7 +192,29 @@ function insertLocationEntry(spot) {
 
 		var latitude = position.coords.latitude;
 		var longitude = position.coords.longitude;
-		var locationText = latitude + String.fromCharCode(176) + ", " + longitude + String.fromCharCode(176);
+		var latitudeString = latitude.toString();
+		var longitudeString = longitude.toString();
+
+		/* Shortening latitude and longitude to 4 decimals after decimal point */
+		if (latitudeString.includes(".")) {
+			var integer = latitudeString.split(".")[0];
+			var decimal = latitudeString.split(".")[1];
+			if (decimal.length > 4) {
+				decimal = decimal.substring(0, 4);
+			}
+			latitudeString = integer + "." + decimal;
+		}
+
+		if (longitudeString.includes(".")) {
+			var integer = longitudeString.split(".")[0];
+			var decimal = longitudeString.split(".")[1];
+			if (decimal.length > 4) {
+				decimal = decimal.substring(0, 4);
+			}
+			longitudeString = integer + "." + decimal;			
+		}
+
+		var locationText = latitudeString + String.fromCharCode(176) + ", " + longitudeString + String.fromCharCode(176);
 		var locationTextNode = document.createTextNode(locationText);
 
 		locationEntry.appendChild(locationTextNode);
@@ -271,13 +293,6 @@ function stopwatch(date) {
 	}
 
 	return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-}
-
-/* Returns a string representation of a date with only the time and timezone (Used in table) */
-function entryTime(date) {
-	var string = date.toString();
-	var items = string.split(" ");
-	return items[4] + " " + items[5] + " " + string.substring(string.indexOf("("), string.indexOf(")") + 1);
 }
 
 /* Returns the number of days in the previous months if the current month is MONTHS (0-11) */
